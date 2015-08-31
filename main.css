@@ -1,0 +1,23 @@
+body {
+	width: 100%;
+	background-image: url('ng_background.jpg');
+	background-size: cover;
+	font-size: 50px;
+}
+
+main {
+	width: 60%;
+	margin: 0 auto;
+	margin-top: 20%;
+	text-align: center;
+	border: 10px solid #000;
+	border-radius: 20px;
+	padding: 10px;
+	background-color: #fff;
+	background-color: rgba(255,255,255, 0.8);
+
+} main h1 {
+	font-size: 1em;
+} main h2 {
+	font-size: .5em;
+}
