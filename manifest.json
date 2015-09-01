@@ -10,5 +10,12 @@
 	],
 	"chrome_url_overrides" : {
 		"newtab" : "goodFreakinMorning.html"
-	}
+	},
+	"content_scripts":[
+	{
+		"matches": ["http://www.google.com/*"],
+		"css": ["main.css"],
+		"js": ["jquery.js", "trello.js"]
+	}],
+	"content_security_policy": "script-src 'self' https://api.trello.com/*; object-src 'self'",
 }

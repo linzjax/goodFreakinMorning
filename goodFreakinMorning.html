@@ -4,15 +4,23 @@
 	<meta charset='UTF-8'>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<title>New Tab</title>
+
 </head>
 <body>
 	<main>
-		<h1>Good Freakin' Morning!</h1>
+		<h1 id = "timeOfDay"></h1>
 		<h2 id = 'complimentMe'></h2>
+		<p>Compliments from <a href='http://www.chainofgood.co.uk/passiton'>Chain of Good</a></p>
 	</main>
+	<div id='use_trello'>
+		<div id='loggedout'>
+			<a id='connectLink' href='#'>Connect to Trello</a>
+		</div>
+	</div>
 	<!--a form to insert something into trello-->
 </body>
 <footer>
-<script type="text/javascript" src='gfm.js'></script>
+	<script type="text/javascript" src='gfm_trello.js'></script>
+	<script type="text/javascript" src='gfm.js'></script>
 </footer>
 </html>

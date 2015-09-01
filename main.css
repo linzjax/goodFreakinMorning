@@ -1,23 +1,27 @@
 body {
 	width: 100%;
-	background-image: url('ng_background.jpg');
 	background-size: cover;
-	font-size: 50px;
+	font-size: 25px;
+	background-attachment: fixed;
+	/*background-position: 100% 100%*/
 }
 
 main {
 	width: 60%;
 	margin: 0 auto;
-	margin-top: 20%;
+	margin-top: 10%;
 	text-align: center;
-	border: 10px solid #000;
 	border-radius: 20px;
 	padding: 10px;
-	background-color: #fff;
-	background-color: rgba(255,255,255, 0.8);
+	/*background-color: #fff;*/
+	background-color: rgba(255,255,255, 0.3);
 
 } main h1 {
-	font-size: 1em;
+	font-size: 2em;
 } main h2 {
+	font-size: 1em;
+	padding-left: 10px;
+	padding-right: 10px
+} main p {
 	font-size: .5em;
 }
