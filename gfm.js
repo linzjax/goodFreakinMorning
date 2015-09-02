@@ -1,6 +1,9 @@
 //dark skies api key : dfca3c0aef158e73d2cc5951a910b3d6
 //https://api.forecast.io/forecast/dfca3c0aef158e73d2cc5951a910b3d6/LATITUDE,LONGITUDE
 
+//google geolocator api key:
+var api_key = "AIzaSyCwz9UmMiTedyaMLToME_GZfAO-KQcFico";
+
 var date = new Date().getHours();
 
 
@@ -36,8 +39,40 @@ function checkTime(){
 }//end checkTime
 
 
-//aquire location and display weather data
 
+
+
+
+
+//
+var x = document.getElementById("weather");
+function displayWeather() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(accessDarkSkies);
+	} else {
+		x.innerHTML = "well, guess I can't creep";
+	}
+}
+
+function showPosition(position){
+	x.innerHTML = "latitude: " + position.coords.latitude + "<br>Longitute: " + position.coords.longitute;
+}
+
+
+
+function accessDarkSkies(position){
+	var uri = "https://api.forecast.io/forecast/dfca3c0aef158e73d2cc5951a910b3d6/"+ position.coords.latitude + "," + position.coords.longitude;
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+			if (xhr.readyState === 4 && xhr.status === 200){
+			var j = JSON.parse(xhr.responseText);
+			x.innerHTML = j.currently.apparentTemperature;
+		}
+	};
+
+	xhr.open("GET", uri);
+	xhr.send();
+}
 
 
 
@@ -47,7 +82,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	changeBackground();
 	checkTime();
 	giveCompliment();
+	displayWeather();
 });
-
-
-
