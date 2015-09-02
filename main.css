@@ -3,25 +3,56 @@ body {
 	background-size: cover;
 	font-size: 25px;
 	background-attachment: fixed;
+	font-family: "Asap", sans-serif;
 	/*background-position: 100% 100%*/
 }
 
 main {
 	width: 60%;
 	margin: 0 auto;
-	margin-top: 10%;
+	margin-top: 5%;
 	text-align: center;
 	border-radius: 20px;
 	padding: 10px;
 	/*background-color: #fff;*/
 	background-color: rgba(255,255,255, 0.3);
+	box-shadow: 0 0 10px rgba(255,255,255, 0.6);
 
 } main h1 {
 	font-size: 2em;
+	font-family: 'Pacifico', cursive;
 } main h2 {
 	font-size: 1em;
 	padding-left: 10px;
-	padding-right: 10px
+	padding-right: 10px;
 } main p {
 	font-size: .5em;
+}
+#wrapper {
+	display: inline-block;
+	width: 100%;
+}
+
+#weather {
+	padding: 10px;
+	border-radius: 20px;
+	margin: 10px;
+	float: left;
+}
+#current_time {
+	padding: 10px;
+	margin: 10px;
+	border-radius: 20px;
+	float: right;
+	text-align: right;
+}
+
+.rights {
+	font-size: .5em;
+	font-family: Arial;
+	color: #fff;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+
 }

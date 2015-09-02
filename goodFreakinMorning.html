@@ -2,24 +2,35 @@
 <html>
 <head>
 	<meta charset='UTF-8'>
+	<link href='https://fonts.googleapis.com/css?family=Asap:400italic,400|Pacifico' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<title>New Tab</title>
-
 </head>
+
 <body>
+
+	<div id='wrapper'>
+		<div id ='weather'>
+			<p>Loading weather data...</p>
+		</div>
+		<div id ='current_time'>
+			<p></p>
+		</div>
+	</div>
+
 	<main>
 		<h1 id = "timeOfDay"></h1>
 		<h2 id = 'complimentMe'></h2>
-		<p>Compliments from <a href='http://www.chainofgood.co.uk/passiton'>Chain of Good</a></p>
-		<div id ='weather'>
-		<form id='zipform'>
-			<input type='text' placeholder='enter zip code' id='zipcode'></input>
-			<button type='submit' id='submit'></button>
-		</form>
-		</div>
 	</main>
+
+	<div class='rights'>
+		<p>Compliments from <a href='http://www.chainofgood.co.uk/passiton'>Chain of Good</a></p>
+	</div>
+
 </body>
+
 <footer>
+	<script type="text/javascript" src='config.js'></script>
 	<script type="text/javascript" src='compliments.js'></script>
 	<script type="text/javascript" src='gfm.js'></script>
 </footer>
