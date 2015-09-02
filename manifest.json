@@ -3,7 +3,11 @@
 
 	"name": "Good Freakin Morning",
 	"description": "This extension turns your front page into a freakin motivational buddy to make sure you're gettin stuff done!",
-	"version":"1.0",
+	"version":"0.0.0.1",
+
+	"icons":{
+		"16":"sun_logo.png"
+	},
 
 	"permissions":[
 		"tabs", 
