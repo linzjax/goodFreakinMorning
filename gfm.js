@@ -1,41 +1,27 @@
 //Determine the time of day and the date. Will update every second.
 function updateClock(){
-	var date = new Date().getHours();
-	var minutes = ('0' + new Date().getMinutes()).slice(-2);
-	var x = new Date().getMonth();
-	var month = month_name[x];
-	var day = new Date().getDate();
-	var year = new Date().getFullYear();
+	var date = new Date()
+	//gives hour:minute:seconds am/pm
+	var todaysDate = date.toLocaleString(undefined, {month:"long", day:"numeric", year:"numeric"});
+	var now = date.toLocaleTimeString(undefined, {hour:"numeric", minute:"numeric"});
 
-	function getHour() {
-		var hour;
-		if (date > 12){
-			return date - 12 + ":" + minutes +  'pm';
-		} else {
-			return date + ":" + minutes + 'am';
-		}
-	}
-
-	var todays_date = getHour() + '<br>' + month + ' ' + day + ", " + year;
-	document.getElementById('current_time'). innerHTML = todays_date;
+	document.getElementById('current_time'). innerHTML = now + "<br>" + todaysDate;
 	checkTime(date);
 	setTimeout(updateClock, 1000);
 }//end updateClock
 
 //determines whether to display morning or afternoon
 function checkTime(date){
-	var timeOfDay = document.getElementById('timeOfDay');
-	if (date < 11)
-		timeOfDay.innerHTML = "Good freakin' morning!";
-	else
-		timeOfDay.innerHTML = "Good freakin' afternoon!";
+	document.getElementById('timeOfDay')
+		.innerHTML = date.getHours() <= 11? 
+			"Good freakin' morning!" : "Good freakin' afternoon!";
 }//end checkTime
 
 //generate the compliment
 //compliments are stored in compliments.js
 function giveCompliment(){
-	var x = Math.floor(Math.random() * compliments.length);
-	var chosenCompliment = compliments[x].compliment;
+	var index = Math.floor(Math.random() * compliments.length);
+	var chosenCompliment = compliments[index].compliment;
 	document.getElementById('complimentMe').innerHTML = chosenCompliment;
 }//end giveCompliment
 
@@ -43,17 +29,17 @@ function giveCompliment(){
 //generate the background
 //background imgs also stored in compliments.js
 function changeBackground(){
-	var x = Math.floor(Math.random() * img_url.length);
-	document.body.setAttribute("style", "background-image: url('img/" + img_url[x] + "');");
+	var index = Math.floor(Math.random() * imgUrl.length);
+	document.body.setAttribute("style", "background-image: url('img/" + imgUrl[index] + "');");
 }//end change background
 
 //get location of user and trigger a data stroage
-var x = document.getElementById("weather");
-function displayWeather() {
+
+function getLocation(weatherElement) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(storeData);
 	} else {
-		x.innerHTML = "well, guess I can't creep";
+		weatherElement.innerHTML = "well, guess I can't creep";
 	}
 }
 //store the users long and lat for faster weather generation
@@ -70,9 +56,10 @@ function storeData(position){
 
 //display the approprate weather information based on users location and Dark Sky's api
 function accessDarkSkies(position){
+	var weatherElement = document.getElementById("weather");
 	chrome.storage.sync.get(function(data){
 		if (!data){
-			displayWeather();
+			getLocation(weatherElement);
 		}
 		var uri = "https://api.forecast.io/forecast/" + darkskieskey + "/"+ data.latitude + "," + data.longitude;
 		var xhr = new XMLHttpRequest();
@@ -81,7 +68,7 @@ function accessDarkSkies(position){
 				var j = JSON.parse(xhr.responseText);
 				var temp = j.currently.temperature.toString();
 				temp = temp.split('.');
-				x.innerHTML = temp[0] + '&#8457 <br>' + j.currently.summary;
+				weatherElement.innerHTML = temp[0] + '&#8457 <br>' + j.currently.summary;
 			}
 		};
 
@@ -95,7 +82,6 @@ function accessDarkSkies(position){
 document.addEventListener('DOMContentLoaded', function() {
 	updateClock();
 	changeBackground();
-	checkTime();
 	giveCompliment();
 	accessDarkSkies();
 });
