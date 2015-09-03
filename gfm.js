@@ -33,49 +33,58 @@ function changeBackground(){
 	document.body.setAttribute("style", "background-image: url('img/" + imgUrl[index] + "');");
 }//end change background
 
-//get location of user and trigger a data stroage
 
-function getLocation(weatherElement) {
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(storeData);
-	} else {
-		weatherElement.innerHTML = "well, guess I can't creep";
-	}
-}
 //store the users long and lat for faster weather generation
-function storeData(position){
+function storeData(callback, position){
+	if (callback === undefined){
+		callback = function(){
+			console.log('things were calledback');
+		}
+	}
+	console.log("I'm trying! I promise");
 	var lat = position.coords.latitude;
 	var lgn = position.coords.longitude;
 	chrome.storage.sync.set({
-		"latitude" : lat,
-		"longitude" : lgn
-	}, function(){
-		console.log('things ' + lat + " " + lgn + ' were saved');
-	});
+		"lat" : lat,
+		"lng" : lgn
+	}, callback);
+}
+
+function callDarkSkies(data){
+	var uri = "https://api.forecast.io/forecast/" + darkskieskey + "/"+ data.lat + "," + data.lng;
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+			if (xhr.readyState === 4 && xhr.status === 200){
+			var j = JSON.parse(xhr.responseText);
+			var temp = j.currently.temperature.toString();
+			temp = temp.split('.');
+			document.getElementById('weather').innerHTML = temp[0] + '&#8457 <br>' + j.currently.summary;
+		}
+	};
+
+	xhr.open("GET", uri);
+	xhr.send();
+	//end xhr
 }
 
 //display the approprate weather information based on users location and Dark Sky's api
-function accessDarkSkies(position){
+function accessDarkSkies(){
 	var weatherElement = document.getElementById("weather");
-	chrome.storage.sync.get(function(data){
-		if (!data){
-			getLocation(weatherElement);
-		}
-		var uri = "https://api.forecast.io/forecast/" + darkskieskey + "/"+ data.latitude + "," + data.longitude;
-		var xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = function(){
-				if (xhr.readyState === 4 && xhr.status === 200){
-				var j = JSON.parse(xhr.responseText);
-				var temp = j.currently.temperature.toString();
-				temp = temp.split('.');
-				weatherElement.innerHTML = temp[0] + '&#8457 <br>' + j.currently.summary;
-			}
-		};
 
-		xhr.open("GET", uri);
-		xhr.send();
-		//end xhr
-	});//end storage get
+	chrome.storage.sync.get(function(data){
+		if (!data.hasOwnProperty('lat')) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(
+					storeData.bind(this, function(data) {
+						chrome.storage.sync.get(callDarkSkies);
+					}));
+			} else {
+				weatherElement.innerHTML = "well, guess I can't creep";
+			}
+		} else {
+			callDarkSkies(data);
+		}
+	});
 }//end access dark skies.
 
 //kick everything off once them DOM has loaded
